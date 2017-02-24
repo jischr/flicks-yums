@@ -1,0 +1,67 @@
+#hero {
+  background-image: url("img/hero.jpg");
+  background-size: cover;
+  width: 100%;
+  height: 515px;
+  text-align: center;
+}
+#logo{
+  padding-top: 200px;
+  font-size: 11vmin;
+  letter-spacing: 1px;
+  font-family: 'Limelight';
+}
+
+#and{
+  font-family: 'Inconsolata';
+  font-size: 8vmin;
+}
+.input-group{
+  width:50%;
+  margin:auto;
+}
+
+.center-block {
+  display: block;
+}
+
+#input {
+  border-radius: 5px;
+  border: 4px solid rgb(193, 255, 168);
+  border-right: none;
+  font-family: 'Inconsolata'
+
+}
+
+.btn{
+  /*background-color: rgba(255, 255, 255, 0);*/
+  border: 4px solid rgb(193, 255, 168);
+  border-radius: 5px;
+  letter-spacing: 3px;
+  background-color: rgb(193, 255, 168);
+
+}
+.btn:hover{
+  background-color: rgb(173, 228, 151);
+  border: 4px solid rgb(173, 228, 151);
+
+}
+
+section.compare {
+  width: auto;
+  height:  600px;
+}
+
+footer div.footer {
+  width: auto;
+  height: 100px;
+  background-color: #ffab40;
+
+}
+footer div.copy {
+  width: auto;
+  height: 50px;
+  background-color: #ff9100;
+  color: white;
+
+}
