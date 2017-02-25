@@ -47,21 +47,63 @@
 
 }
 
-section.compare {
-  width: auto;
-  height:  600px;
+div.compare {
+
 }
+
+.row div.poster {
+  margin-top: 100px;
+  margin-bottom: 50px;
+  height: 400px;
+}
+
+#netflix{
+  border: 1px solid black;
+}
+
+#recipe {
+  border: 1px solid black;
+}
+
+div .reyummify {
+  margin: auto;
+  padding-bottom: 50px;
+}
+
 
 footer div.footer {
   width: auto;
-  height: 100px;
+  height: auto;
   background-color: #ffab40;
-
+  text-align: center;
 }
-footer div.copy {
+
+footer .div h4 {
+  font-size: 2px;
+}
+
+#logoFooter{
+  padding-top: 25px;
+  font-size: 6vmin;
+  letter-spacing: 1px;
+  font-family: 'Limelight';
+  color: #fff;
+}
+
+#andFooter{
+  font-family: 'Inconsolata';
+  font-size: 4vmin;
+}
+
+footer div small {
+  color: #fff;
+  display: block;
+  padding: 1vmin;
+}
+
+footer div.APIref {
   width: auto;
   height: 50px;
   background-color: #ff9100;
-  color: white;
-
+  color: #fff;
 }
