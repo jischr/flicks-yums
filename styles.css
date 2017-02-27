@@ -26,43 +26,49 @@
 }
 
 #input {
-  border-radius: 5px;
+  border-radius: 20px 0px 0px 20px;
   border: 4px solid rgb(193, 255, 168);
   border-right: none;
   font-family: 'Inconsolata'
 
 }
 
-.btn{
+.btn {
   /*background-color: rgba(255, 255, 255, 0);*/
   border: 4px solid rgb(193, 255, 168);
-  border-radius: 5px;
   letter-spacing: 3px;
   background-color: rgb(193, 255, 168);
+}
 
+button#yummify {
+  border-radius: 0px 20px 20px 0px;
 }
 .btn:hover{
   background-color: rgb(173, 228, 151);
   border: 4px solid rgb(173, 228, 151);
+  /*border-radius: 5px;*/
 
 }
 
 div.compare {
-
+  display: none;
 }
 
 .row div.poster {
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 50px;
-  height: 400px;
-}
-
-#netflix{
-  border: 1px solid black;
+  height: auto;
 }
 
 #recipe {
-  border: 1px solid black;
+};
+
+#recipeBtn {
+  color: #000;
+}
+
+.hide {
+  display: none;
 }
 
 div .reyummify {
@@ -74,7 +80,7 @@ div .reyummify {
 footer div.footer {
   width: auto;
   height: auto;
-  background-color: #ffab40;
+  background-color: #ffb74d;
   text-align: center;
 }
 
@@ -104,6 +110,7 @@ footer div small {
 footer div.APIref {
   width: auto;
   height: 50px;
-  background-color: #ff9100;
+  background-color: #ffa726;
+  font-family: 'Inconsolata';
   color: #fff;
 }
