@@ -21,6 +21,10 @@ $(document).ready(function() {
   // variable to hold food type
   let foodType = '';
 
+  let ajaxErrorHandler = function(err) {
+    console.log('AJAX error', err);
+  };
+
   // matches genre with food types
   let foodMatches = {
     Drama: 'italian',
@@ -125,9 +129,7 @@ $(document).ready(function() {
         $('#yields').text(`Yield: ${yields}`);
         $('#dietLabels').text(dietLabels);
       },
-      error: function(err) {
-        console.log('error', err);
-      }
+      error: ajaxErrorHandler
     });
   };
 
@@ -164,9 +166,7 @@ $(document).ready(function() {
         // hide modal
         toggleSearchResults();
       },
-      error: function() {
-        console.log('error');
-      },
+      error: ajaxErrorHandler,
       async: true
     }).then(getRecipe);
   };
@@ -209,12 +209,7 @@ $(document).ready(function() {
       url: `http://omdbapi.com/?s=${userSearch}`,
       dataType: 'json',
       success: handleYummifySuccess,
-      error: function() {
-        console.log('error');
-      }
-    }).then(function(event) {
-      // console.log("outside ajax call then", poster, title);
-
-    })
+      error: ajaxErrorHandler
+    });
   });
 });
