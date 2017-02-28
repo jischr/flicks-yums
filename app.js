@@ -1,11 +1,11 @@
 $(document).ready(function() {
-  // DECLARE SOME VARIABLES
+// DECLARE SOME VARIABLES
 
   // Get the buttons
   let yummify = $('#yummify');
   let reyummify = $('#reyummify');
 
-  // set title, year, genre of chosen movie
+  // declare title, year, genre, poster, plot of chosen movie
   let title = '';
   let year = '';
   let genre = '';
@@ -126,6 +126,11 @@ $(document).ready(function() {
   let handleMoviePosterClick = function(event) {
     // display compare section
     $('.compare').show();
+    event.preventDefault();
+
+    $('html, body').animate({
+        scrollTop: $(".compare").offset().top
+    }, 500);
 
     let id = $(event.target).attr("id");
 
@@ -161,34 +166,45 @@ $(document).ready(function() {
   };
 
   let handleYummifySuccess = function(data) {
-    let results = [];
-    let currentResult = {};
+    if (data.Error === 'Movie not found!') {
+      $('input').blur();
+      $('input').popover('show');
+    }
+    else {
+      let results = [];
+      let currentResult = {};
 
-    data.Search.forEach(result => {
-      currentResult = {
-        title: result.Title,
-        year: result.Year,
-        id: result.imdbID
-      };
-      results.push(currentResult);
-    });
+      data.Search.forEach(result => {
+        currentResult = {
+          title: result.Title,
+          year: result.Year,
+          id: result.imdbID
+        };
+        results.push(currentResult);
+      });
 
-    results.forEach(show => {
-      $('.list-group').append(
-        `<li class="list-group-item" id=${show.id}>
+      results.forEach(show => {
+        $('.list-group').append(
+          `<li class="list-group-item" id=${show.id}>
          ${show.title} (${show.year})
        </li>`
-      );
-    });
+        );
+      });
 
-    // show modal!
-    toggleSearchResults();
+      // show modal!
+      toggleSearchResults();
 
-    // create movie poster card!
-    $('.list-group-item').click(handleMoviePosterClick);
+      // create movie poster card!
+      $('.list-group-item').click(handleMoviePosterClick);
+    };
   };
 
 // EVENT LISTENERS
+
+  // listens for input click and hides popover
+  $('input').click(function() {
+    $('input').popover('hide');
+  });
 
   // listener for ingredientTab click
   $('#ingredientTab').click(handleIngredientTabClick);
