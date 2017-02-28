@@ -1,15 +1,9 @@
 $(document).ready(function() {
-
   // DECLARE SOME VARIABLES
 
   // Get the buttons
   let yummify = $('#yummify');
   let reyummify = $('#reyummify');
-
-  // generate show options search options
-  let toggleSearchResults = function() {
-    $('#myModal').modal('toggle');
-  };
 
   // set title, year, genre of chosen movie
   let title = '';
@@ -21,6 +15,9 @@ $(document).ready(function() {
   // variable to hold food type
   let foodType = '';
 
+  // DECLARE SOME FUNCTIONS
+
+  // handle ajax errors
   let ajaxErrorHandler = function(err) {
     console.log('AJAX error', err);
   };
@@ -46,41 +43,24 @@ $(document).ready(function() {
     Crime: 'chinese'
   };
 
-  // API FUNCTIONALITY
 
-  // when press enter in input box, yummify click wil be acitvated
-  $('input').keydown(function(event) {
-    if (event.keyCode === 13) {
-      yummify.trigger('click');
+  let handleIngredientTabClick = function(event) {
+    if ($('.ingredientCard').hasClass('hide')) {
+      $('#ingredientTab').addClass('active');
+      $('#recipeTab').removeClass('active');
+      $('.ingredientCard').removeClass('hide');
+      $('.recipeCard').addClass('hide');
     }
-  });
+  };
 
-  // when modal is closed (either by x, esc, or by clicking a movie title)
-  $('#myModal').on('hidden.bs.modal', function() {
-    // remove items from modal list and show placeholder on search bar
-    $('.list-group').children().remove();
-    $('input').val('');
-  });
-
- let handleIngredientTabClick = function(event) {
-   if ($('.ingredientCard').hasClass('hide')) {
-     $('#ingredientTab').addClass('active');
-     $('#recipeTab').removeClass('active');
-     $('.ingredientCard').removeClass('hide');
-     $('.recipeCard').addClass('hide');
-   }
- };
-  // recipe cards tabs FUNCTIONALITY
-  $('#ingredientTab').click(handleIngredientTabClick);
-
-  $('#recipeTab').click(function(event) {
+  let handleRecipeTabClick = function(event) {
     if ($('.recipeCard').hasClass('hide')) {
       $('#recipeTab').addClass('active');
       $('#ingredientTab').removeClass('active');
       $('.recipeCard').removeClass('hide');
       $('.ingredientCard').addClass('hide');
     }
-  });
+  };
 
   let getRecipe = function(event) {
 
@@ -121,8 +101,8 @@ $(document).ready(function() {
         ingredientLines.forEach(ingred => {
           $('#ingredientList').append(
             `<li class="list-group-item">
-              ${ingred}
-            </li>`);
+             ${ingred}
+           </li>`);
         });
 
         $('#calories').text(`Calories: ${calories}`);
@@ -156,12 +136,12 @@ $(document).ready(function() {
 
         $('#movie').append(
           `<div class="card">
-            <img class="card-img-top" src=${poster} alt="">
-              <div class="card-block">
-                <h5>${title} (${year})</h5>
-                <p class="card-text">${plot}</p>
-              </div>
-            </div>`);
+           <img class="card-img-top" src=${poster} alt="">
+             <div class="card-block">
+               <h5>${title} (${year})</h5>
+               <p class="card-text">${plot}</p>
+             </div>
+           </div>`);
 
         // hide modal
         toggleSearchResults();
@@ -187,8 +167,8 @@ $(document).ready(function() {
     results.forEach(show => {
       $('.list-group').append(
         `<li class="list-group-item" id=${show.id}>
-          ${show.title} (${show.year})
-        </li>`
+         ${show.title} (${show.year})
+       </li>`
       );
     });
 
@@ -198,7 +178,38 @@ $(document).ready(function() {
     // create movie poster card!
     $('.list-group-item').click(handleMoviePosterClick);
   };
-  // event listener for yummify and reyummify btns
+
+  // MODAL FUNCTIONALITY
+
+  // when modal is closed (either by x, esc, or by clicking a movie title)
+  $('#myModal').on('hidden.bs.modal', function() {
+    // remove items from modal list and show placeholder on search bar
+    $('.list-group').children().remove();
+    $('input').val('');
+  });
+
+  // generate show options search options
+  let toggleSearchResults = function() {
+    $('#myModal').modal('toggle');
+  };
+
+
+  // EVENT LISTENERS
+
+  // listener for ingredientTab click
+  $('#ingredientTab').click(handleIngredientTabClick);
+
+  // listener for recipeTab click
+  $('#recipeTab').click(handleRecipeTabClick);
+
+  // Trigger yummify click with enter key
+  $('input').keydown(function(event) {
+    if (event.keyCode === 13) {
+      yummify.trigger('click');
+    }
+  });
+
+  // listener for yummify btn
   yummify.click(event => {
     // get user search
     let userSearch = $('input').val();
