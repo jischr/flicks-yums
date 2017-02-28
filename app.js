@@ -19,7 +19,7 @@ $(document).ready(function() {
   let plot = '';
 
   // variable to hold food type
-  let foodType;
+  let foodType = '';
 
   // matches genre with food types
   let foodMatches = {
@@ -58,16 +58,16 @@ $(document).ready(function() {
     $('input').val('');
   });
 
-
+ let handleIngredientTabClick = function(event) {
+   if ($('.ingredientCard').hasClass('hide')) {
+     $('#ingredientTab').addClass('active');
+     $('#recipeTab').removeClass('active');
+     $('.ingredientCard').removeClass('hide');
+     $('.recipeCard').addClass('hide');
+   }
+ };
   // recipe cards tabs FUNCTIONALITY
-  $('#ingredientTab').click(function(event) {
-    if ($('.ingredientCard').hasClass('hide')) {
-      $('#ingredientTab').addClass('active');
-      $('#recipeTab').removeClass('active');
-      $('.ingredientCard').removeClass('hide');
-      $('.recipeCard').addClass('hide');
-    }
-  });
+  $('#ingredientTab').click(handleIngredientTabClick);
 
   $('#recipeTab').click(function(event) {
     if ($('.recipeCard').hasClass('hide')) {
@@ -77,6 +77,59 @@ $(document).ready(function() {
       $('.ingredientCard').addClass('hide');
     }
   });
+
+  let getRecipe = function(event) {
+
+    // HERE call RECIPE API
+
+    // getting first genre of movie
+    let genreToRecipe = genre.split(', ')[0];
+
+    // setting foodType, correcting for undefined genres
+    foodMatches[genreToRecipe] === undefined ? foodType = 'italian' : foodType = foodMatches[genreToRecipe]
+
+    $.ajax({
+      method: 'GET',
+      url: `https://api.edamam.com/search?q=${foodType}&app_id=1e590c2b&app_key=352ccf135e3d4e4ee7d8fb2195038326`,
+      dataType: 'json',
+      success: function(dataRecipes) {
+        $('#ingredientList').children().remove();
+
+        let recipeIndex = Math.floor(Math.random() * dataRecipes['hits'].length);
+
+        let recipe = dataRecipes['hits'][recipeIndex]['recipe'];
+
+        let label = recipe['label'];
+        let ingredientLines = recipe['ingredientLines'];
+        let source = recipe['source'];
+        let calories = recipe['calories'].toFixed(0);
+        let healthLabels = recipe['healthLabels'].join(', ');
+        let recipeImage = recipe['image'];
+        let yields = recipe['yield'];
+        let dietLabels = recipe['dietLabels'].join(', ');
+        let url = recipe['url'];
+
+        $('#recipeImage').attr("src", recipeImage);
+        $('#recipeTitle').text(label);
+        $('#recipeSource').text(`From ${source}`);
+        $('#recipeBtn').attr("href", url);
+
+        ingredientLines.forEach(ingred => {
+          $('#ingredientList').append(
+            `<li class="list-group-item">
+              ${ingred}
+            </li>`);
+        });
+
+        $('#calories').text(`Calories: ${calories}`);
+        $('#yields').text(`Yield: ${yields}`);
+        $('#dietLabels').text(dietLabels);
+      },
+      error: function(err) {
+        console.log('error', err);
+      }
+    });
+  };
 
   let handleMoviePosterClick = function(event) {
     // display compare section
@@ -115,63 +168,36 @@ $(document).ready(function() {
         console.log('error');
       },
       async: true
-    }).then(function(event) {
-
-      // HERE call RECIPE API
-
-      // getting first genre of movie
-      let genreToRecipe = genre.split(', ')[0];
-
-      // setting foodType, correcting for undefined genres
-      foodMatches[genreToRecipe] === undefined ? foodType = 'italian' : foodType = foodMatches[genreToRecipe]
-
-      $.ajax({
-        method: 'GET',
-        url: `https://api.edamam.com/search?q=${foodType}&app_id=1e590c2b&app_key=352ccf135e3d4e4ee7d8fb2195038326`,
-        dataType: 'json',
-        success: function(dataRecipes) {
-
-          $('#ingredientList').children().remove();
-
-          let recipeIndex = Math.floor(Math.random() * dataRecipes['hits'].length);
-
-          console.log(dataRecipes['hits'][recipeIndex]);
-
-          let recipe = dataRecipes['hits'][recipeIndex]['recipe'];
-
-          let label = recipe['label'];
-          let ingredientLines = recipe['ingredientLines'];
-          let source = recipe['source'];
-          let calories = recipe['calories'].toFixed(0);
-          let healthLabels = recipe['healthLabels'].join(', ');
-          let recipeImage = recipe['image'];
-          let yields = recipe['yield'];
-          let dietLabels = recipe['dietLabels'].join(', ');
-          let url = recipe['url'];
-
-          $('#recipeImage').attr("src", recipeImage);
-          $('#recipeTitle').text(label);
-          $('#recipeSource').text(`From ${source}`);
-          $('#recipeBtn').attr("href", url);
-
-          ingredientLines.forEach(ingred => {
-            $('#ingredientList').append(
-              `<li class="list-group-item">
-                ${ingred}
-              </li>`);
-          });
-
-          $('#calories').text(`Calories: ${calories}`);
-          $('#yields').text(`Yield: ${yields}`);
-          $('#dietLabels').text(dietLabels);
-        },
-        error: function(err) {
-          console.log('error', err);
-        }
-      })
-    })
+    }).then(getRecipe);
   };
 
+  let handleYummifySuccess = function(data) {
+    let results = [];
+    let currentResult = {};
+
+    data.Search.forEach(result => {
+      currentResult = {
+        title: result.Title,
+        year: result.Year,
+        id: result.imdbID
+      };
+      results.push(currentResult);
+    });
+
+    results.forEach(show => {
+      $('.list-group').append(
+        `<li class="list-group-item" id=${show.id}>
+          ${show.title} (${show.year})
+        </li>`
+      );
+    });
+
+    // show modal!
+    toggleSearchResults();
+
+    // create movie poster card!
+    $('.list-group-item').click(handleMoviePosterClick);
+  };
   // event listener for yummify and reyummify btns
   yummify.click(event => {
     // get user search
@@ -182,33 +208,7 @@ $(document).ready(function() {
       method: 'GET',
       url: `http://omdbapi.com/?s=${userSearch}`,
       dataType: 'json',
-      success: function(data) {
-        let results = [];
-        let currentResult = {};
-
-        data.Search.forEach(result => {
-          currentResult = {
-            title: result.Title,
-            year: result.Year,
-            id: result.imdbID
-          };
-          results.push(currentResult);
-        });
-
-        results.forEach(show => {
-          $('.list-group').append(
-            `<li class="list-group-item" id=${show.id}>
-              ${show.title} (${show.year})
-            </li>`
-          );
-        });
-
-        // show modal!
-        toggleSearchResults();
-
-        // create movie poster card!
-        $('.list-group-item').click(handleMoviePosterClick);
-      },
+      success: handleYummifySuccess,
       error: function() {
         console.log('error');
       }
