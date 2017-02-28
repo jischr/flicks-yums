@@ -57,19 +57,14 @@ div.compare {
 .card {
   height: 100%;
 }
+.card-img-top {
+  width: 100%;  
+}
+
 .row div.poster {
   margin-top: 50px;
   margin-bottom: 50px;
   height: auto;
-}
-
-#movie {
-  margin-right: 20px;
-}
-
-#recipe {
-  margin-left: 20px;
-
 }
 
 a#recipeBtn {

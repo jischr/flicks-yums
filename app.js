@@ -15,7 +15,21 @@ $(document).ready(function() {
   // variable to hold food type
   let foodType = '';
 
-  // DECLARE SOME FUNCTIONS
+// MODAL FUNCTIONALITY
+
+  // when modal is closed (either by x, esc, or by clicking a movie title)
+  $('#myModal').on('hidden.bs.modal', function() {
+    // remove items from modal list and show placeholder on search bar
+    $('.list-group').children().remove();
+    $('input').val('');
+  });
+
+  // generate show options search options
+  let toggleSearchResults = function() {
+    $('#myModal').modal('toggle');
+  };
+
+// DECLARE SOME FUNCTIONS
 
   // handle ajax errors
   let ajaxErrorHandler = function(err) {
@@ -43,7 +57,6 @@ $(document).ready(function() {
     Crime: 'chinese'
   };
 
-
   let handleIngredientTabClick = function(event) {
     if ($('.ingredientCard').hasClass('hide')) {
       $('#ingredientTab').addClass('active');
@@ -63,14 +76,11 @@ $(document).ready(function() {
   };
 
   let getRecipe = function(event) {
-
-    // HERE call RECIPE API
-
     // getting first genre of movie
     let genreToRecipe = genre.split(', ')[0];
 
     // setting foodType, correcting for undefined genres
-    foodMatches[genreToRecipe] === undefined ? foodType = 'italian' : foodType = foodMatches[genreToRecipe]
+    foodMatches[genreToRecipe] === undefined ? foodType = 'italian' : foodType = foodMatches[genreToRecipe];
 
     $.ajax({
       method: 'GET',
@@ -124,7 +134,6 @@ $(document).ready(function() {
       url: `http://omdbapi.com/?i=${id}&plot=short`,
       dataType: 'json',
       success: function(dataById) {
-
         // remove present card
         $('#movie').children().remove();
 
@@ -179,22 +188,7 @@ $(document).ready(function() {
     $('.list-group-item').click(handleMoviePosterClick);
   };
 
-  // MODAL FUNCTIONALITY
-
-  // when modal is closed (either by x, esc, or by clicking a movie title)
-  $('#myModal').on('hidden.bs.modal', function() {
-    // remove items from modal list and show placeholder on search bar
-    $('.list-group').children().remove();
-    $('input').val('');
-  });
-
-  // generate show options search options
-  let toggleSearchResults = function() {
-    $('#myModal').modal('toggle');
-  };
-
-
-  // EVENT LISTENERS
+// EVENT LISTENERS
 
   // listener for ingredientTab click
   $('#ingredientTab').click(handleIngredientTabClick);
@@ -202,7 +196,7 @@ $(document).ready(function() {
   // listener for recipeTab click
   $('#recipeTab').click(handleRecipeTabClick);
 
-  // Trigger yummify click with enter key
+  // trigger yummify click with enter key
   $('input').keydown(function(event) {
     if (event.keyCode === 13) {
       yummify.trigger('click');
@@ -222,5 +216,10 @@ $(document).ready(function() {
       success: handleYummifySuccess,
       error: ajaxErrorHandler
     });
+  });
+
+  // listener for reyummify!
+  reyummify.click(event => {
+    getRecipe(genre);
   });
 });
