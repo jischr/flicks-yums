@@ -18,6 +18,30 @@ $(document).ready(function() {
   let poster = '';
   let plot = '';
 
+  // variable to hold food type
+  let foodType;
+
+  // matches genre with food types
+  let foodMatches = {
+    Drama: 'italian',
+    Biography: 'pie',
+    Western: 'tacos',
+    'History': 'steak',
+    Adventure: 'BBQ',
+    Comedy: 'wings',
+    Fantasy: 'pancakes',
+    Action: 'burger',
+    Documentary: 'pizza',
+    Romance: 'pasta',
+    Horror: 'finger food',
+    Mystery: 'ice cream sundae',
+    Thriller: 'salad',
+    Animation: 'mac n cheese',
+    'Sci-Fi': 'milkshake',
+    Sport: 'nachos',
+    Crime: 'chinese'
+  };
+
   // API FUNCTIONALITY
 
   // when press enter in input box, yummify click wil be acitvated
@@ -95,32 +119,8 @@ $(document).ready(function() {
 
       // HERE call RECIPE API
 
-      // matches genre with food types
-      let foodMatches = {
-        Drama: 'italian',
-        Biography: 'pie',
-        Western: 'tacos',
-        'History': 'steak',
-        Adventure: 'BBQ',
-        Comedy: 'wings',
-        Fantasy: 'pancakes',
-        Action: 'burger',
-        Documentary: 'pizza',
-        Romance: 'pasta',
-        Horror: 'finger food',
-        Mystery: 'ice cream sundae',
-        Thriller: 'salad',
-        Animation: 'mac n cheese',
-        'Sci-Fi': 'milkshake',
-        Sport: 'nachos',
-        Crime: 'chinese'
-      };
-
       // getting first genre of movie
       let genreToRecipe = genre.split(', ')[0];
-
-      // variable to hold food type
-      let foodType;
 
       // setting foodType, correcting for undefined genres
       foodMatches[genreToRecipe] === undefined ? foodType = 'italian' : foodType = foodMatches[genreToRecipe]
@@ -169,7 +169,6 @@ $(document).ready(function() {
           console.log('error', err);
         }
       })
-
     })
   };
 
