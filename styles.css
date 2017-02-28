@@ -54,17 +54,30 @@ div.compare {
   display: none;
 }
 
+.card {
+  height: 100%;
+}
 .row div.poster {
   margin-top: 50px;
   margin-bottom: 50px;
   height: auto;
 }
 
-#recipe {
-};
+#movie {
+  margin-right: 20px;
+}
 
-#recipeBtn {
+#recipe {
+  margin-left: 20px;
+
+}
+
+a#recipeBtn {
   color: #000;
+  margin: auto;
+  display: table;
+  background-color: #cfd8dc;
+  border: none;
 }
 
 .hide {

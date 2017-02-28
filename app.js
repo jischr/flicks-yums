@@ -95,6 +95,7 @@ $(document).ready(function() {
           $('.compare').show();
 
           let id = $(event.target).attr("id");
+
           $.ajax({
             method: 'GET',
             url: `http://omdbapi.com/?i=${id}&plot=short`,
@@ -133,21 +134,21 @@ $(document).ready(function() {
 
             // matches genre with food types
             let foodMatches = {
-              Drama: 'pasta',
-              Biography: 'salad',
+              Drama: 'italian',
+              Biography: 'pie',
               Western: 'tacos',
               'History': 'steak',
-              Adventure: 'chicken',
+              Adventure: 'BBQ',
               Comedy: 'wings',
-              Fantasy: 'crockpot chicken',
+              Fantasy: 'pancakes',
               Action: 'burger',
-              Documentary: 'pho',
-              Romance: 'soup',
-              Horror: 'chocolate cake',
+              Documentary: 'pizza',
+              Romance: 'pasta',
+              Horror: 'finger food',
               Mystery: 'ice cream sundae',
-              Thriller: 'fried rice',
+              Thriller: 'salad',
               Animation: 'mac n cheese',
-              'Sci-Fi': 'pie',
+              'Sci-Fi': 'milkshake',
               Sport: 'nachos',
               Crime: 'chinese'
             };
@@ -167,7 +168,11 @@ $(document).ready(function() {
               dataType: 'json',
               success: function(dataRecipes) {
 
+                $('#ingredientList').children().remove();
+
                 let recipeIndex = Math.floor(Math.random() * dataRecipes['hits'].length);
+
+                console.log(dataRecipes['hits'][recipeIndex]);
 
                 let recipe = dataRecipes['hits'][recipeIndex]['recipe'];
 
@@ -175,35 +180,28 @@ $(document).ready(function() {
                 let ingredientLines = recipe['ingredientLines'];
                 let source = recipe['source'];
                 let calories = recipe['calories'].toFixed(0);
-                let healthLabels = recipe['healthLabels'].join(", ");
+                let healthLabels = recipe['healthLabels'].join(', ');
                 let recipeImage = recipe['image'];
                 let yields = recipe['yield'];
-                let dietLabels = recipe['dietLabels'];
+                let dietLabels = recipe['dietLabels'].join(', ');
                 let url = recipe['url'];
 
                 $('#recipeImage').attr("src", recipeImage);
                 $('#recipeTitle').text(label);
-                $('#recipeSource').text(source);
-                $('#healthLabels').text(healthLabels);
+                $('#recipeSource').text(`From ${source}`);
                 $('#recipeBtn').attr("href", url);
 
                 ingredientLines.forEach(ingred => {
                   $('#ingredientList').append(
                     `<li class="list-group-item">
                       ${ingred}
-                    </li>`)
-                    console.log(ingred);
+                    </li>`);
                 });
-
-                console.log(ingredientLines);
-
 
                 $('#calories').text(`Calories: ${calories}`);
                 $('#yields').text(`Yield: ${yields}`);
                 $('#dietLabels').text(dietLabels);
               },
-
-
               error: function() {
                 console.log('error');
               }

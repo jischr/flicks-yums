@@ -11,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="app.js"></script>
+  <!-- <script src="https://use.fontawesome.com/401daaed63.js"></script> -->
 
   <!-- Bootstrap style.css stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -52,16 +53,29 @@
       </div>
     </div>
   </section>
+  <section class="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 offset-md-3">
+          <i class="fa fa-camera-retro fa-lg"></i>
+        </div>
+        <div class="col-md-2">
+          hey
+        </div>
+        <div class="col-md-2">
+          hey
+        </div>
+      </div>
+    </div>
+  </section>
   <!--Movie/Show poster, recipe compare section, initally hidden -->
   <section class="container">
     <div class="container compare">
       <div class="row">
-        <div class="col-md-4 offset-md-1 poster" id="movie">
-        </div>
-        <div class="col-md-2 poster">
+        <div class="col-lg-4 offset-lg-2 poster" id="movie">
         </div>
         <!-- RECIPE CARDS, content to be added dynamically-->
-        <div class="col-md-4 poster" id="recipe">
+        <div class="col-lg-4 poster" id="recipe">
           <div class="card">
             <div class="card-header">
               <ul class="nav nav-tabs card-header-tabs">
@@ -78,8 +92,7 @@
               <div class="card-block">
                 <h5 class="card-title" id="recipeTitle"></h5>
                 <p class="card-text" id="recipeSource"></p>
-                <p class="card-text" id="healthLabels"></p>
-                <a href="" class="btn btn-primary" id="recipeBtn">Go to Recipe</a>
+                <a href="" class="btn btn-primary" id="recipeBtn" target="_blank">Go to Recipe</a>
               </div>
             </div>
             <div class="card-block ingredientCard hide">
@@ -87,10 +100,11 @@
               <h5 class="card-title">Ingredient List</h5>
               <ul class="card-text list-group" id="ingredientList">
               </ul>
+              <br>
               <p class="card-text" id="calories"></p>
               <p class="card-text" id="yields"></p>
               <p class="card-text" id="dietLabels"></p>
-              <a href="" class="btn btn-primary" id="recipeBtn">Go to Recipe</a>
+              <a href="" class="btn btn-primary" id="recipeBtn" target="_blank">Go to Recipe</a>
             </div>
           </div>
         </div>
