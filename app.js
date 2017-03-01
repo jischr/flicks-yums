@@ -199,6 +199,19 @@ $(document).ready(function() {
     };
   };
 
+  let getSearchResults = function(event) {
+    let userSearch = $('input').val();
+
+    // use omdbapi to get movie data & display array results in modal
+    $.ajax({
+      method: 'GET',
+      url: `http://omdbapi.com/?s=${userSearch}`,
+      dataType: 'json',
+      success: handleYummifySuccess,
+      error: ajaxErrorHandler
+    });
+  };
+
 // EVENT LISTENERS
 
   // listens for input click and hides popover
@@ -215,24 +228,12 @@ $(document).ready(function() {
   // trigger yummify click with enter key
   $('input').keydown(function(event) {
     if (event.keyCode === 13) {
-      yummify.trigger('click');
+      getSearchResults();
     }
   });
 
-  // listener for yummify btn
-  yummify.click(event => {
-    // get user search
-    let userSearch = $('input').val();
-
-    // use omdbapi to get movie data & display array results in modal
-    $.ajax({
-      method: 'GET',
-      url: `http://omdbapi.com/?s=${userSearch}`,
-      dataType: 'json',
-      success: handleYummifySuccess,
-      error: ajaxErrorHandler
-    });
-  });
+// listener for yummify btn
+  yummify.click(getSearchResults);
 
   // listener for reyummify!
   reyummify.click(event => {
