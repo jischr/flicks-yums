@@ -21,6 +21,9 @@
   margin:auto;
 }
 
+.input-group#md-down-input-group {
+  width: 85%;
+}
 .center-block {
   display: block;
 }
@@ -30,8 +33,14 @@
   border: 4px solid rgb(193, 255, 168);
   border-right: none;
   font-family: 'Inconsolata'
-
 }
+
+#md-down-input {
+  border-radius: 20px;
+  border: 4px solid rgb(193, 255, 168);
+  font-family: 'Inconsolata'
+}
+
 
 .btn {
   /*background-color: rgba(255, 255, 255, 0);*/
@@ -49,6 +58,19 @@ button#yummify {
   border: 4px solid rgb(173, 228, 151);
   /*border-radius: 5px;*/
 }
+.row.md-down-row {
+  margin: auto;
+  display: inline-block;
+}
+
+span#md-down-yummify-span {
+  padding-top: 3vmin;
+  margin: auto;
+}
+
+button#yummify.md-down-yummify {
+  border-radius: 20px;
+}
 
 div.compare {
   display: none;
@@ -58,7 +80,7 @@ div.compare {
   height: 100%;
 }
 .card-img-top {
-  width: 100%;  
+  width: 100%;
 }
 
 .row div.poster {
@@ -115,6 +137,7 @@ footer div small {
   color: #fff;
   display: inline-block;
   padding-bottom: 2vmin;
+  font-size: 2.5vmin;
 }
 
 h5#tagline {
@@ -122,7 +145,7 @@ h5#tagline {
   color: #fff;
   display: inline-block;
   padding-bottom: 4vmin;
-  font-size: 3vmin;
+  /*font-size: 4vmin;*/
 
 }
 
@@ -132,4 +155,22 @@ footer div.APIref {
   background-color: #ffa726;
   font-family: 'Inconsolata';
   color: #fff;
+  font-size: 3vmin;
+  padding-left: 3vmin;
+}
+
+.row.big{
+  display: none;
+}
+.row.small{
+  display: block;
+}
+
+@media (min-width:992px) {
+  .row.big{
+    display: block;
+  }
+  .row.small{
+    display: none;
+  }
 }

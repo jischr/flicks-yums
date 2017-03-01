@@ -166,7 +166,7 @@ $(document).ready(function() {
   };
 
   let handleYummifySuccess = function(data) {
-    if (data.Error === 'Movie not found!') {
+    if (data.Error === 'Movie not found!' || $('input').val() === '') {
       $('input').blur();
       $('input').popover('show');
     }
