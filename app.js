@@ -244,7 +244,7 @@ $(document).ready(function() {
 
       // create movie poster card!
       $('.list-group-item').click(handleMoviePosterClick);
-    };
+    }
   };
 
   let getSentiment =
