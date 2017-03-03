@@ -51,7 +51,6 @@ span.yummify {
 .btn:hover{
   background-color: rgb(173, 228, 151);
   border: 4px solid rgb(173, 228, 151);
-  /*border-radius: 5px;*/
 }
 
 div.compare {
@@ -88,6 +87,16 @@ div .reyummify {
   padding-bottom: 50px;
 }
 
+#reyummify {
+  margin: auto;
+}
+
+.face img {
+  margin: 0 auto;
+  display: table;
+  width: 12%;
+  padding-bottom: 3vmin;
+}
 
 footer div.footer {
   width: auto;
