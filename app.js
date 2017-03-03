@@ -1,5 +1,5 @@
 $(document).ready(function() {
-// DECLARE SOME VARIABLES
+  // DECLARE SOME VARIABLES
 
   // Get the buttons
   let yummify = $('#yummify');
@@ -10,12 +10,15 @@ $(document).ready(function() {
   let year = '';
   let genre = '';
   let poster = '';
-  let plot = '';
+  var plot = '';
 
   // variable to hold food type
   let foodType = '';
 
-// MODAL FUNCTIONALITY
+  // variable to hold plot sentiment
+  let movieSentiment = '';
+
+  // MODAL FUNCTIONALITY
 
   // when modal is closed (either by x, esc, or by clicking a movie title)
   $('#myModal').on('hidden.bs.modal', function() {
@@ -29,7 +32,7 @@ $(document).ready(function() {
     $('#myModal').modal('toggle');
   };
 
-// DECLARE SOME FUNCTIONS
+  // DECLARE SOME FUNCTIONS
 
   // handle ajax errors
   let ajaxErrorHandler = function(err) {
@@ -38,7 +41,7 @@ $(document).ready(function() {
 
   // matches genre with food types
   let foodMatches = {
-    Drama: 'italian',
+    Drama: 'pasta',
     Biography: 'pie',
     Western: 'tacos',
     'History': 'steak',
@@ -47,7 +50,7 @@ $(document).ready(function() {
     Fantasy: 'pancakes',
     Action: 'burger',
     Documentary: 'pizza',
-    Romance: 'pasta',
+    Romance: 'clams',
     Horror: 'finger food',
     Mystery: 'ice cream sundae',
     Thriller: 'salad',
@@ -76,6 +79,8 @@ $(document).ready(function() {
   };
 
   let getRecipe = function(event) {
+    // Reset to recipe pg
+    handleRecipeTabClick();
     // getting first genre of movie
     let genreToRecipe = genre.split(', ')[0];
 
@@ -126,10 +131,11 @@ $(document).ready(function() {
   let handleMoviePosterClick = function(event) {
     // display compare section
     $('.compare').show();
+    $('.cuttingboard').show();
     event.preventDefault();
 
     $('html, body').animate({
-        scrollTop: $(".compare").offset().top
+      scrollTop: $(".compare").offset().top
     }, 500);
 
     let id = $(event.target).attr("id");
@@ -159,6 +165,48 @@ $(document).ready(function() {
 
         // hide modal
         toggleSearchResults();
+
+        $(function() {
+          $.ajax({
+            url: "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment/",
+            beforeSend: function(xhrObj) {
+              // Request headers
+              xhrObj.setRequestHeader("Content-Type", "application/json");
+              xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "644e5ed6f0a9434882158e6b91c70012");
+              xhrObj.setRequestHeader("Accept", "application/json");
+            },
+            type: "POST",
+            // Request body
+            data: `{
+              "documents": [{
+                    "language": "en",
+                    "id": "1",
+                    "text": "${plot}"
+                  }
+                ]
+              }`
+          })
+          .done(function(dataSentiment) {
+            movieSentiment = 1 - dataSentiment['documents'][0]['score'];
+
+            if (movieSentiment < 0.2) {
+              $('.face img').attr('src', 'img/faces/1.png');
+            }
+            else if (movieSentiment < 0.4) {
+              $('.face img').attr('src', 'img/faces/3.png');
+            }
+            else if (movieSentiment < 0.6) {
+              $('.face img').attr('src', 'img/faces/5.png');
+            }
+            else if (movieSentiment < 0.8) {
+              $('.face img').attr('src', 'img/faces/7.png');
+            }
+            else if (movieSentiment < 1) {
+              $('.face img').attr('src', 'img/faces/9.png');
+            }
+          })
+          .fail(ajaxErrorHandler);
+        });
       },
       error: ajaxErrorHandler,
       async: true
@@ -199,7 +247,8 @@ $(document).ready(function() {
     };
   };
 
-// EVENT LISTENERS
+  let getSentiment =
+  // EVENT LISTENERS
 
   // listens for input click and hides popover
   $('input').click(function() {
