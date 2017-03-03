@@ -43,7 +43,7 @@ $(document).ready(function() {
   let foodMatches = {
     Drama: 'pasta',
     Biography: 'pie',
-    Western: 'tacos',
+    Western: 'mexican',
     'History': 'steak',
     Adventure: 'BBQ',
     Comedy: 'wings',
