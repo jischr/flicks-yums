@@ -247,6 +247,7 @@ $(document).ready(function() {
     };
   };
 
+  let getSentiment =
   // EVENT LISTENERS
 
   // listens for input click and hides popover
