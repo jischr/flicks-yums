@@ -1,11 +1,12 @@
 # Flicks and Yums
 **Front-end javascript app that expertly curates recipes to accompany any movie or tv viewing experience**
 
-People often want to eat food while watching a movie or TV. But, there are so many options of recipes to cook. Flicks and Yums expertly curates recipes to match any show and, to top it off, gives viewer a preview of the sentiment of the movie/show so they know what to expect.
+People often want to eat food while watching a movie or TV. But, there are so many options of recipes to cook. Flicks and Yums expertly curates recipes to match any show and, to top it all off, gives viewers a preview of the sentiment of the movie/show so they know what to expect.
 
 ##
 
-Note: Due to changing in the API, Flicks and Yums is no longer live.
+Note: Due to changes in the APIs, Flicks and Yums is no longer live.
+
 Please check out the video walk through below:
 
 [![Flicks and Yums Video Walkthrough](img/youtube_screenshot.png)](https://youtu.be/_dQe76iECFs)
